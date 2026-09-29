@@ -14,7 +14,8 @@
 .feedback-carousel .owl-dots .owl-dot span { display: none; }
 .feedback-carousel .owl-dots .owl-dot:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
 
-.feedback-nav { position: absolute; z-index: 10; top: 50%; right: 0; left: 0; display: flex; justify-content: space-between; padding-inline: clamp(.6rem, 3.5vw, 2.75rem); pointer-events: none; transform: translateY(-58%); }
+.feedback-section .container { position: relative; }
+.feedback-nav { position: absolute; z-index: 10; top: 50%; right: -70px; left: -70px; display: flex; justify-content: space-between; padding-inline: .5rem; pointer-events: none; transform: translateY(-58%); }
 .feedback-nav .owl-prev,
 .feedback-nav .owl-next { position: static; display: grid; width: 46px; height: 46px; flex: 0 0 auto; place-items: center; margin: 0; padding: 0; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold-deep); background: var(--cream-light); font-size: 1.4rem; line-height: 1; cursor: pointer; pointer-events: auto; box-shadow: 0 4px 14px #796c4518; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
 .feedback-nav .owl-prev:hover,
