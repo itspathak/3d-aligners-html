@@ -1,0 +1,69 @@
+.site-footer { padding: 3.5rem 0 1rem; color: #f1efe7; background: #101613; }
+.footer-main { padding-bottom: 2rem; }
+.footer-main .clinic-brand { margin-bottom: 1.3rem; }
+.footer-main h2 { margin: .25rem 0 1rem; color: #fff; font-size:26px; font-weight: 700; }
+.footer-main > div > a:not(.clinic-brand), .footer-main > div > p { display: block; margin-bottom: .55rem; color: #c8cbc4; font-size: 18px; }
+.footer-main > div > a:not(.clinic-brand):hover { color: var(--gold); }
+.footer-contact { display: grid; gap: .55rem;margin-top:40px }
+.footer-contact a, .footer-contact span { color: #c8cbc4; font-size: .68rem; overflow-wrap: anywhere; }
+.footer-contact i { width: 20px; margin-right: .25rem; color: var(--gold); }
+.newsletter-form { display: grid; gap: .55rem; max-width: 290px; }
+.newsletter-form > input {     width: 100%;
+    padding: 18px;
+    border: 0;
+    border-radius: 99px;
+    font-size: 15px; }
+.newsletter-form > button { 
+      display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 18px;
+    border: 1px solid var(--gold);
+    border-radius: 99px;
+    color: var(--gold);
+    background: transparent;
+    font-size: 16px;
+ }
+.newsletter-form > button:hover { color: var(--ink); background: var(--gold); }
+.newsletter-consent { display: flex; align-items: flex-start; gap: .45rem; color: #aaa; font-size: 14px; }
+.newsletter-consent input { margin-top: .15rem; accent-color: var(--gold); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1rem; border-top: 1px solid #414741; color: #b8bdb6; font-size: 14px; }
+.social-links { display: flex; gap: .7rem; }
+.social-links a { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 50%; color: #fff; background: #252c27; }
+.social-links a:hover { color: var(--ink); background: var(--gold); }
+.footer-info-details{
+  gap:30px
+}
+.info-text-details p{
+    margin: 0px;
+    color: #d8ad4f;
+}
+.info-text-details a{
+  font-size:14px
+}
+.footerlist a {
+  display: flex !important;
+    align-items: center;
+    gap: 10px;
+}
+.footerlist a:hover span svg path{
+  stroke: var(--gold);
+}
+.news-latter p{
+  font-size: 14px !important;
+}
+
+@media (max-width: 767px) {
+.footer-main h2{
+  font-size: 20px;
+}
+.footer-info-details{
+  gap: 24px
+}
+}
+@media (max-width: 575.98px) {
+  .site-footer { padding-top: 2.5rem; }
+  .footer-bottom { align-items: flex-start; flex-direction: column; }
+}
+
+

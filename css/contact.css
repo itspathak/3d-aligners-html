@@ -1,0 +1,65 @@
+.contact-section { overflow: hidden; background: #fff; padding:70px 0px}
+.contact-section .body-copy { margin-bottom: 1.5rem;font-size:18px }
+.contact-form input, .contact-form textarea { width: 100%; padding: .78rem .95rem; border: 1px solid #e1e3e0; border-radius: 999px; outline: 0; color: var(--ink); background: #fff; font-size: 16px; }
+.contact-form textarea { min-height: 112px; resize: vertical; border-radius: 14px; }
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px #d8ad4f20; }
+.contact-form .outline-button { min-width: 115px; }
+.contact-details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.2rem; }
+.contact-details > div { display: flex; align-items: flex-start; gap: .55rem; color: var(--gold-deep); font-size: .78rem; }
+.contact-details > div > span { display: flex; flex-direction: column; gap: .25rem; color: var(--ink); }
+.contact-details strong { font-size: 15px; }
+.contact-details a, .contact-details > div > span > span { color: #777; font-size:16px; overflow-wrap: anywhere; }
+.contact-image-wrap { position: relative; align-self: stretch; min-height: 350px; }
+.contact-image-wrap::before { position: absolute; z-index: 0; top: 0; right: 0; bottom: 0; width: 79%; background: var(--gold); content: ""; }
+.contact-image-wrap img { position: relative; z-index: 1;  }
+
+
+.contact-image-wrap{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 22%;
+    height: 100%;
+    margin-top: 0px;
+    display: flex;
+    justify-content: end;
+    align-items: end
+}
+/* .contact-image-wrap img{
+  max-width: unset
+} */
+
+
+@media (max-width: 1024px) {
+.contact-image-wrap::before{
+      width: 100%;
+}
+.contact-image-wrap img
+{
+      right: 58px;
+}
+}
+@media (max-width: 991px) {
+  .contact-image-wrap::before{
+    display: none;
+  }
+  .contact-image-wrap img{
+    right: 0px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .contact-details { grid-template-columns: 1fr; gap: .9rem; }
+  .contact-image-wrap {position: unset;width:100%;margin-top:50px;min-height:inherit }
+  .contact-image-wrap::before { width: 100%; }
+  .contact-section{
+    padding-bottom: 0px 
+  }
+  .contact-image-wrap img{        left: 0px;
+        width: 100%;
+        max-width: 75%;
+        right: 0px;
+        margin: 0 auto;
+      
+}
+}

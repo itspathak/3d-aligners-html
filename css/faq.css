@@ -1,0 +1,26 @@
+.faq-section { overflow: hidden; background: #fffdf8; }
+.faq-collage { position: relative; min-height: 360px; }
+.faq-collage img { position: absolute; border-radius: 8px; object-fit: cover; box-shadow: 0 6px 16px #1112; }
+.faq-photo-one { top: 25%; left: -15%; width: 68%; height: 175px; }
+.faq-photo-two { top: 0; right: 4%; width: 39%; height: 170px; }
+.faq-photo-three { right: 3%; bottom: 0; width: 48%; height: 155px; }
+.faq-accordion { margin-top: 1.5rem; }
+.faq-accordion .accordion-item { margin-bottom: .45rem; overflow: hidden; border: 1px solid #eee9dd; border-radius: 7px; background: transparent; }
+.faq-accordion .accordion-button { padding: .85rem 1rem; color: var(--ink); background: #fffdf8; box-shadow: none; font-size: 20px; font-weight: 700; }
+.faq-accordion .accordion-button:not(.collapsed) { color: var(--ink); }
+.faq-accordion .accordion-button::after { width: .9rem; height: .9rem; background-size: .9rem; }
+.faq-accordion .accordion-body { padding: 0 1rem 1rem; color: #777; font-size: 17px; line-height: 1.65; }
+@media (max-width: 991.98px) {
+  .faq-collage { min-height: 270px; max-width: 470px; margin: auto; }
+  .faq-photo-one { left: 0; }
+}
+@media (max-width: 575.98px) {
+  .faq-accordion .accordion-button{
+    font-size: 16px;
+  }
+  .faq-accordion .accordion-body{
+    font-size: 14px;
+  }
+}
+
+

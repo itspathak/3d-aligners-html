@@ -1,0 +1,12 @@
+.video-section { background: #fafafa; }
+.video-poster { position: relative; width: min(100%, 820px); height: clamp(220px, 34vw, 440px); margin: 0 auto 1.25rem; overflow: hidden; background: #f8d3df; }
+.video-poster::after { position: absolute; inset: 0; background: linear-gradient(0deg, #17171722, transparent 45%); content: ""; pointer-events: none; }
+.video-poster > img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+.play-button-large { z-index: 2; width: 58px; height: 58px; font-size: 1.6rem; }
+.video-section .section-title { margin-bottom: .35rem; }
+.video-caption { margin: 0; color: #73736d; font-size: 18px; }
+
+.video-circle{
+    position: absolute;
+    bottom: 0px;
+}

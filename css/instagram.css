@@ -1,0 +1,11 @@
+.instagram-section { background: #f3f8ff; }
+.instagram-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem; }
+.instagram-grid a { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; background: #dfe6ee; }
+.instagram-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.instagram-grid a:hover img { transform: scale(1.06); }
+.instagram-grid a > span { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; background: #12171188; font-size: 1.6rem; opacity: 0; transition: opacity .2s ease; }
+.instagram-grid a:hover > span { opacity: 1; }
+@media (max-width: 575.98px) {
+  .instagram-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+  .instagram-grid a:nth-child(n+4) { display: none; }
+}

@@ -1,0 +1,13 @@
+.ages-section { background: #f8f8f7; }
+/* .age-gallery { display: grid; width: min(100%, 470px); grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-inline: auto; } */
+.age-gallery img { width: 100%;border-radius: 12px; object-fit: cover; }
+.age-gallery img:nth-child(2), .age-gallery img:nth-child(5) { transform: translateY(12px); }
+.age-kicker { margin: 0 0 .1rem; font-size:30px; font-weight: 700; }
+.ages-section .section-title { margin-bottom:30px; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.stats-grid strong { color: var(--gold-deep); font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 800; letter-spacing: -.05em; }
+.stats-grid strong span { font-size: .7em; }
+.stats-grid p { margin: .15rem 0 0; color: #777; font-size: 14px; }
+@media (max-width: 575.98px) {
+  /* .age-gallery img { height: 100px; } */
+}

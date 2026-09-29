@@ -1,0 +1,78 @@
+.steps-banner { overflow: hidden; padding-block: 3rem 2.5rem; background: linear-gradient(115deg, #e3bf58, #d5a52e); }
+.steps-banner .section-title { margin-bottom: 3rem; }
+.steps-banner-grid {
+  position: relative;
+  display: grid;
+  /* width: min(78%, 1100px); */
+  margin: 0 auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  align-items: start;
+}
+.step-teaser { position: relative; z-index: 1; text-align: center; }
+.step-teaser img { width: 220px; height: 220px; margin: 0 auto .5rem; border-radius: 50%; object-fit: cover; }
+.step-teaser h3 { 
+clip-path: polygon(0 10%, 100% 0, 92% 100%, 5% 92%);
+    width: max-content;
+    /* margin: -.1rem auto .5rem; */
+    padding: .35rem 1rem;
+    background: #fffdf5;
+    font-size: 26px;
+    font-weight: 800;
+    transform: rotate(-4deg);
+    position: absolute;
+    bottom: -12px;
+    /* left: 18%; */
+    padding: 13px 55px;
+    /* transform: rotate(355deg); */
+    left: 50%;
+    transform: translate(-50%, 10px);
+}
+ .step-image-clip{
+  position: relative;
+ }
+.step-teaser p {
+    margin-top: 32px;
+    max-width: 270px;
+    color: #51431d;
+    font-size: 18px;
+    line-height: 1.45; }
+.steps-doctor {
+    position: absolute;
+    right: calc((100% - 1320px) / 2);
+    bottom: -2.5rem;
+    width: clamp(130px, 26%, 240px);
+    max-height: 380px;
+    object-fit: contain;
+    object-position: bottom;
+    -webkit-mask-image: linear-gradient(#000 85%, transparent);
+    mask-image: linear-gradient(#000 85%, transparent);
+}
+
+
+@media (max-width: 1024px) {
+.steps-banner-grid{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.steps-doctor{
+  right:0px
+}
+}
+@media (max-width: 767.98px) {
+  .steps-banner-grid { width: 100%; gap: .6rem; }
+  /* .step-teaser img { width: clamp(68px, 17vw, 105px); height: clamp(68px, 17vw, 105px); } */
+  /* .step-teaser h3 { padding: .3rem .65rem; font-size: .68rem; } */
+  /* .step-teaser p { font-size: .58rem; } */
+  .steps-doctor { display: none; }
+  .steps-banner-grid{
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+}
+
+
+
+
+
+
+

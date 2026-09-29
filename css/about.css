@@ -1,0 +1,20 @@
+.about-section { overflow: hidden; background: #fff; }
+.about-collage { position: relative; }
+.about-photo { position: absolute; height: 250px; border-radius: 10px; object-fit: cover; box-shadow: 0 8px 25px #1b211b25; }
+.about-photo-back { top: 30px; left: 0; width: 58%; }
+.about-photo-front { top: 0; right: 4%; z-index: 1; width: 57%; height: 290px; }
+.collage-tag { position: absolute; z-index: 2; bottom: 0; left: 5%; padding: .7rem 1rem; border-left: 3px solid var(--gold); color: var(--ink); background: #fff; font-size: .72rem; font-weight: 700; line-height: 1.4; }
+.about-section .section-title { margin-bottom: 1.1rem; }
+.about-section .body-copy { margin-bottom: .65rem; }
+
+
+@media (max-width: 991px) {
+  .about-collage{
+    text-align:center;
+  }
+}
+@media (max-width: 575.98px) {
+  /* .about-collage { min-height: 260px; } */
+  .about-photo { height: 205px; }
+  .about-photo-front { height: 235px; }
+}

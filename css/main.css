@@ -1,0 +1,17 @@
+/* Global styles and section-specific styles are organized in separate files. */
+@import url("./base.css");
+@import url("./header.css");
+@import url("./hero.css");
+@import url("./about.css");
+@import url("./guarantee.css");
+@import url("./benefits.css");
+@import url("./video.css");
+@import url("./steps.css");
+@import url("./process.css");
+@import url("./ages.css");
+@import url("./feedback.css");
+@import url("./happy.css");
+@import url("./faq.css");
+@import url("./instagram.css");
+@import url("./contact.css");
+@import url("./footer.css");
