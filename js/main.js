@@ -157,6 +157,31 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", onScroll, { passive: true });
   }
 
+  // Video lightbox: load the clicked video, then clean it up on close.
+  const videoModal = document.getElementById("videoModal");
+  const videoPlayer = document.getElementById("globalVideoPlayer");
+  if (videoModal && videoPlayer) {
+    const videoSource = videoPlayer.querySelector("source");
+
+    videoModal.addEventListener("show.bs.modal", (event) => {
+      const videoSrc = event.relatedTarget && event.relatedTarget.dataset.videoSrc;
+      if (!videoSrc) return;
+      videoSource.src = videoSrc;
+      videoPlayer.load();
+    });
+
+    videoModal.addEventListener("shown.bs.modal", () => {
+      videoPlayer.play().catch(() => { });
+    });
+
+    videoModal.addEventListener("hidden.bs.modal", () => {
+      videoPlayer.pause();
+      videoPlayer.currentTime = 0;
+      videoSource.removeAttribute("src");
+      videoPlayer.load();
+    });
+  }
+
   // Keep the footer year current.
   const year = document.getElementById("currentYear");
   if (year) year.textContent = new Date().getFullYear();

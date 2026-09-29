@@ -10,3 +10,9 @@
     position: absolute;
     bottom: 0px;
 }
+.top-shape{
+    right: 0px;
+    top: 0;
+    transform: rotate(180deg) !important;
+    bottom: auto;
+}

@@ -2,7 +2,12 @@
 .happy-feature { position: relative; display: grid; width: min(100%, 850px); grid-template-columns: 220px 1fr 150px; align-items: center; gap: 2rem; margin: 0 auto; }
 .happy-portrait { width: 210px; height: 230px; border-radius: 48% 8px 48% 48%; object-fit: cover; }
 .happy-copy h3 { margin: 0 0 .35rem; font-size: 32px; font-weight: 800; }
-.happy-copy p { max-width: 480px; margin: .65rem 0; color: #777; font-size: .77rem; line-height: 1.7; }
+.happy-copy p {     max-width: 480px;
+    margin: .65rem 0;
+    color: #777;
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 23px 0px 20px; }
 .slider-dots { display: flex; gap: .35rem; }
 .slider-dots span { width: 16px; height: 6px; border-radius: 9px; background: #deded8; cursor: pointer; transition: width .25s ease, background .25s ease; }
 .slider-dots span:hover { background: #cdc2a3; }
@@ -25,14 +30,17 @@
 .happy-arrows .happy-prev:focus-visible,
 .happy-arrows .happy-next:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
 
-.happy-orbit { position: relative; width: 140px; height: 140px; }
+.happy-orbit { position: relative; width: 240px; height: 240px; }
 .happy-orbit::before, .happy-orbit::after { position: absolute; border: 1px solid #eee9dc; border-radius: 50%; content: ""; }
-.happy-orbit::before { inset: 10px; }
-.happy-orbit::after { inset: 30px; }
-.happy-orbit img { position: absolute; z-index: 1; width: 48px; height: 48px; border: 4px solid #f8f8f7; border-radius: 50%; object-fit: cover; }
+.happy-orbit::before { inset: 10px; box-shadow: 0 0 0 19px #f8f8f7, 0 0 0 20px #eee9dc; }
+.happy-orbit::after { position: absolute; top: 50%; left: 50%; width: 2px; height: 60px; margin-left: -1px; border: 0; border-radius: 0; background: radial-gradient(circle 5px at 50% 100%, var(--gold) 99%, transparent 100%), linear-gradient(to bottom, transparent 0%, #d8ad4f80 45%, var(--gold-deep) 100%); transform-origin: 50% 0; animation: orbitPointerSpin 7s linear infinite; pointer-events: none; }
+@keyframes orbitPointerSpin { to { transform: rotate(360deg); } }
+.happy-orbit img { position: absolute; z-index: 1;     width: 80px;
+    height: 80px; border: 4px solid #f8f8f7; border-radius: 50%; object-fit: cover; }
 .happy-orbit img:nth-child(1) { top: 0; right: 10px; }
 .happy-orbit img:nth-child(2) { bottom: 10px; left: 0; }
 .happy-orbit img:nth-child(3) { right: 0; bottom: 0; }
+.happy-feature:hover .happy-orbit::after { animation-play-state: paused; }
 @media (max-width: 767.98px) {
   .happy-feature { grid-template-columns: 115px 1fr; gap: 1rem; }
   .happy-portrait { width: 115px; height: 150px; }
