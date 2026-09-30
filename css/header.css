@@ -1,7 +1,7 @@
 .site-header { position: sticky; z-index: 20; top: 0; color: #f9f5e8; background: #0d1311;  transition: background .3s ease, box-shadow .3s ease; }
 .site-header.is-stuck { background: #0a0f0d; box-shadow: 0 14px 30px -12px #000e; }
 .is-stuck .navbar{min-height:60px !important;transition: min-height .3s ease}
-.site-header .container { width: min(100% - 48px, 1460px); max-width: none; padding-inline: 0; }
+.site-header .container { width: min(100% - 48px, 1460px);  padding-inline: 0; }
 .site-header .navbar { min-height: 88px; padding-block: .55rem; }
 .clinic-brand { position: relative; display: flex; width: max-content; align-items: center;  }
 .clinic-brand > span { display: inline; font-size: inherit; letter-spacing: -.045em; }
@@ -23,7 +23,7 @@
   .site-header .container { width: min(100% - 32px, 720px); }
   .site-header .navbar { min-height: 76px; position: static; }
   .site-header .navbar-collapse { position: absolute; top: 100%; right: 0; left: 0; z-index: 30; padding-inline: 1rem; background: #0d1311; box-shadow: 0 22px 34px -20px #000; }
-  .site-header .navbar-collapse.show { max-height: calc(100vh - 76px); overflow-y: auto; }
+  .site-header .navbar-collapse.show { max-height: calc(100vh - 76px); overflow-y: auto; padding-bottom: 30px;}
   .site-header .navbar-nav { align-items: flex-start !important; gap: 0; }
   .site-header .nav-link { padding: .6rem 0 !important; font-size: .9rem; }
   .site-header .nav-link.active::after { right: auto; bottom: .25rem; left: 0; width: 26px; }

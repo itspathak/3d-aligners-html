@@ -42,17 +42,38 @@
   object-fit: contain;
   object-position: bottom right;
 }
-
 @media (max-width: 991.98px) {
+  .about-page-banner {
+    --banner-img-h: clamp(260px, 46vw, 400px);
+    padding-bottom: calc(var(--banner-img-h) + 1.25rem);
+  }
+
+  .about-page-banner .section-heading { position: relative; }
+
   .about-page-img {
-    position: static;
-    height: 175px;
-    margin: 1.4rem auto 0;
+    position: absolute;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Measured from the heading's bottom edge, so it has to travel the whole
+       reserved band to land on the banner's bottom edge. */
+    bottom: calc(-1 * (var(--banner-img-h) + 1.25rem));
+    height: var(--banner-img-h);
+    aspect-ratio: 464 / 514;
+    margin: 0;
+    max-width: 100%;
+            top: 169px;
   }
 }
 
 @media (max-width: 575.98px) {
-  .about-page-img { height: 140px; margin-top: 1.1rem; }
+  .about-page-banner { --banner-img-h: clamp(230px, 62vw, 300px); }
+}
+
+/* 401px and down: a 320px phone cannot give the person much, but it still has
+   to clear the breadcrumb above it. */
+@media (max-width: 400.98px) {
+  .about-page-banner { --banner-img-h: clamp(210px, 68vw, 250px); }
 }
 
 @media (max-width: 1199px) {
@@ -60,9 +81,9 @@
 }
 
 @media (max-width: 767.98px) {
-  .about-page-banner {
+  /* .about-page-banner {
     background-image: linear-gradient(180deg, #1c211dee 0%, #1c211dcc 100%), url("../images/about-banner.png");
-  }
+  } */
 }
 
 

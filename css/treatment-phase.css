@@ -1,0 +1,519 @@
+/* =====================================================
+   TREATMENT PHASE SLIDER
+   Full-image stage + slide counter + synced thumbnail
+   rail + custom dot row. Slides, thumbnails and the
+   counter are all written out statically in the HTML.
+   ===================================================== */
+
+/* ---------- section backdrop, anchored top-left ----------
+   The backdrop is a faint (max 30% alpha) sparse line PNG with transparent
+   corners, so `cover` is not an option: it scales the art ~1.56x on desktop
+   and pushes those corners outside the box, which makes the anchoring
+   impossible to see. The size is therefore pinned to the image width and
+   capped at the viewport, which keeps the placement identical from 1920px
+   down to a 320px phone without needing a media query per breakpoint. */
+
+.phase-tratement-section {
+    background-color: #f2f2f2;
+    background-image: url(../images/treatment-bg-img.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: min(1232px, 100vw) auto;
+    background-attachment: scroll;
+    /* Band the bottom-corner art may occupy. Desktop leaves it wide enough to
+       render uncapped; the narrow breakpoints below shrink it to fit the
+       padding they actually give the section, because the art is anchored
+       bottom:0 and was previously overlapping the dots on every phone width. */
+    --corner-h: 220px;
+}
+/* Corner illustration. It is painted on the bottom layer so it can never
+   cover the slider, which sits in the left column of the middle section.
+   pointer-events:none keeps clicks passing straight through to the stage. */
+/* ---------- corner illustrations ----------
+   A section can carry one of these or two. The wrapper is absolutely
+   positioned against the section, so it needs an explicit horizontal anchor:
+   with neither left nor right set, an absolutely positioned box falls back to
+   its static position, which is the same spot for every instance, so two of
+   them land on exactly the same pixels.
+
+   The size is bounded on both axes on purpose. Capping only the width left
+   why-choose-right.png free to grow to 253px tall on a 375px phone, while the
+   section only had about 61px of padding under the content, so the artwork
+   sat across the dots and the bottom of the stage. max-width and max-height
+   together keep the aspect ratio and stay inside the band the section
+   reserves for it. */
+.tratement-phase-img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    z-index: 0;
+    pointer-events: none;
+    max-width:200px
+}
+
+
+.tratement-phase-img img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width:100%;
+    max-height: var(--corner-h);
+}
+
+/* A second artwork in the same section moves to the opposite edge, so two of
+   them can never share the same pixels. */
+.tratement-phase-img + .tratement-phase-img {
+    right: 0;
+    left: auto;
+}
+
+.phase-tratement-section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- middle section ----------
+   The line art only exists between x 77 and 462 of the 1232px-wide PNG, so a
+   left-anchored backdrop lands squarely under the left column. In the first
+   and last sections that column is transparent text and the art reads through
+   it, but here the left column is the slider, which is opaque down to its own
+   --cream-light backdrop: that swallowed 81% of the artwork at 1440px and all
+   of it at 1280px and below. Rather than fight it, this section opts out of
+   the backdrop entirely and goes white, and the corner illustration is moved
+   to the right edge so it is not fighting the slider either.
+
+   If the artwork is ever wanted back here, a mirrored copy anchored to the
+   right works: keep the box the width of the image and pin it with right:0,
+   then scaleX(-1) about its own right edge. Pinning a full-width box instead
+   would mirror about the section centre and shift the art by an amount that
+   changes with the viewport. */
+.phase-tratement-section--flip {
+    background-image: none;
+    background-color: #fff !important;
+}
+/* The middle section has the slider in its left column, so its artwork is
+   pushed to the opposite edge. */
+.phase-tratement-section--flip .tratement-phase-img {
+    right: 0;
+    left: auto;
+}
+.alig-details-list p{
+    font-size:18px;
+    color:rgba(115, 115, 115, 1)
+}
+.alig-details-list ul{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(11px, 2.4vw, 16px);
+  padding:0px;
+  margin:0px
+}
+.alig-details-list ul li{
+    display: flex;
+    gap:10px
+}
+.alig-details-list ul li p{
+  width:100%;
+  margin:0px
+}
+.phase-tratement-section h2{
+  color:#000
+
+}
+/* .phase-tratement-section--flip::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: min(1232px, 100%);
+    aspect-ratio: 1232 / 704;
+    background: url(../images/treatment-bg-img.png) top left / auto no-repeat;
+    transform: scaleX(-1);
+    transform-origin: top right;
+    pointer-events: none;
+} */
+
+
+.treatment-phaseslider {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Owl writes an explicit pixel width on .owl-stage (five times the column
+   width) and relies on .owl-stage-outer clipping and scrolling it. A flex or
+   grid child defaults to `min-width: auto`, which refuses to shrink below its
+   content, so that width escaped the Bootstrap column, the row overflowed, and
+   any ancestor with `overflow: hidden` clipped the slider away on tablet
+   widths. min-width: 0 on the column, the slider and the stage lets the stage
+   shrink back to the column and scroll internally the way Owl expects. */
+.integrating-3d-section .row > [class*="col-"],
+.phase-trstatement-section .row > [class*="col-"] {
+    min-width: 0;
+}
+
+.treatment-phase__track,
+.treatment-phase__track .owl-stage-outer {
+    min-width: 0;
+}
+
+/* ---------- stage: the large image ---------- */
+
+.treatment-phase__stage {
+    position: relative;
+    min-width: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--cream-light);
+    box-shadow: 0 18px 44px rgba(17, 23, 20, .12);
+}
+
+.treatment-phase__track {
+    display: block;
+    margin: 0;
+}
+
+.treatment-phase__slide {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+
+.treatment-phase__slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* slide title, bottom-left over a soft scrim */
+.treatment-phase__label {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 34px 16px 14px;
+    color: #fff;
+    background: linear-gradient(180deg, transparent, rgba(17, 23, 20, .78));
+    font-size: .95rem;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+/* ---------- counter badge: top-right of the image ---------- */
+
+.treatment-phase__count {
+    position: absolute;
+    z-index: 3;
+    top: 14px;
+    right: 14px;
+    display: inline-flex;
+    gap: 4px;
+    align-items: baseline;
+    padding: 7px 14px;
+    border: 1px solid rgba(216, 173, 79, .5);
+    border-radius: 999px;
+    color: var(--gold);
+    background: rgba(17, 23, 20, .72);
+    backdrop-filter: blur(6px);
+    font-size: .82rem;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.treatment-phase__count b {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.treatment-phase__count i {
+    color: rgba(216, 173, 79, .55);
+    font-style: normal;
+}
+
+.treatment-phase__count span {
+    color: rgba(247, 242, 227, .8);
+}
+
+/* ---------- thumbnail rail: 5 small images ---------- */
+
+.treatment-phase__thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.treatment-phase__thumb {
+    position: relative;
+    padding: 0;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    background: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.treatment-phase__thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    opacity: .55;
+    transition: filter .25s ease, opacity .25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .treatment-phase__thumb:hover img {
+        filter: grayscale(.35);
+        opacity: .85;
+    }
+}
+
+.treatment-phase__thumb:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.treatment-phase__thumb[aria-selected="true"] {
+    border-color: var(--gold);
+    box-shadow: 0 8px 18px rgba(201, 155, 53, .28);
+    transform: translateY(-2px);
+}
+
+.treatment-phase__thumb[aria-selected="true"] img {
+    filter: none;
+    opacity: 1;
+}
+
+/* ---------- dots, rendered below the rail ---------- */
+
+.treatment-phase__dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.treatment-phase__dots .owl-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.treatment-phase__dots .owl-dot {
+    width: 8px;
+    height: 8px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--line);
+    transition: width .25s ease, background-color .25s ease;
+}
+
+.treatment-phase__dots .owl-dot.active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--gold);
+}
+
+/* An 8px dot cannot be tapped reliably on a phone. This leaves the
+   rendered size alone and only enlarges the area the pointer can hit. */
+.treatment-phase__dots .owl-dot {
+    position: relative;
+}
+
+.treatment-phase__dots .owl-dot::after {
+    content: "";
+    position: absolute;
+    inset: -9px;
+}
+
+/* ---------- owl resets so it inherits the design ---------- */
+
+.treatment-phase__track .owl-stage {
+    position: relative;
+}
+
+.treatment-phase__track .owl-item {
+    transition: transform .45s ease;
+}
+
+.treatment-phaseslider .owl-carousel .owl-item img {
+    display: block;
+}
+
+/* ---------- responsive ----------
+   The two columns stay side by side down to 768px, which is what
+   col-lg-6 col-md-6 asks for; below that Bootstrap drops the col classes and
+   the columns stack to full width. Each block below owns one band, narrowest
+   last, so nothing is declared for a width it never actually renders at. */
+
+/* 1200px and down: the container steps from 1140px to 960px, so both columns
+   narrow and the copy column starts wrapping sooner. */
+@media (max-width: 1199.98px) {
+    .alig-details-list p {
+        font-size: 17px;
+    }
+}
+
+/* 992px and down: container is 960px and each column is 50% of it. */
+@media (max-width: 991.98px) {
+    .phase-trstatement-section {
+        padding: 80px 0px;
+        --corner-h: 72px;
+    }
+
+    .treatment-phase__thumbs {
+        gap: 6px;
+    }
+
+    .treatment-phase__label {
+        padding: 28px 13px 11px;
+        font-size: .88rem;
+    }
+
+    .alig-details-list p {
+        font-size: 16px;
+    }
+}
+
+/* 768px and down: one column, so the title and the five items finally get the
+   full width. The list icons move onto the first text line instead of
+   floating in the middle of a block that wraps to four lines on a phone. */
+@media (max-width: 767.98px) {
+    .phase-tratement-section h2 {
+        font-size: clamp(1.3rem, 5.6vw, 1.75rem);
+        line-height: 1.25;
+        margin-bottom: 18px;
+    }
+
+    .alig-details-list ul li {
+        align-items: flex-start;
+        gap: 9px;
+    }
+    .align-cleaner-section .section-heading{
+        margin-top: 50px;
+    }
+
+    .alig-details-list ul li svg {
+        width: 30px;
+        height: 30px;
+        margin-top: 1px;
+    }
+    .tratement-phase-img{
+        display: none;
+    }
+    .section-phase-card{
+        margin:50px 0px 0px
+    }
+    .phase-tratement-section .section-heading {
+    margin-bottom: 1.5rem;
+}
+.alig-details-list{
+    margin-bottom: 30px;
+}
+}
+
+/* 576px and down: phone. */
+@media (max-width: 575.98px) {
+    .phase-trstatement-section {
+        padding: 50px 0px;
+        --corner-h: 44px;
+    }
+
+    .treatment-phase__stage {
+        border-radius: 14px;
+    }
+
+    .treatment-phase__thumbs {
+        gap: 5px;
+        margin-top: 20px;
+    }
+
+    .treatment-phase__thumb {
+        border-radius: 8px;
+    }
+
+    .treatment-phase__count {
+        top: 10px;
+        right: 10px;
+        padding: 6px 11px;
+        font-size: .74rem;
+    }
+
+    .treatment-phase__count b {
+        font-size: .92rem;
+    }
+
+    .treatment-phase__label {
+        padding: 24px 11px 9px;
+        font-size: .8rem;
+    }
+
+    .treatment-phase__dots {
+        margin-top: 12px;
+    }
+
+    .alig-details-list p {
+        font-size: 15.5px;
+        line-height: 1.45;
+    }
+
+    .alig-details-list ul li {
+        gap: 8px;
+    }
+
+    .alig-details-list ul li svg {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* 401px and down: small phones. The five thumbs have to survive on one row,
+   so the gap and the border each give up a little width to every thumbnail. */
+@media (max-width: 400.98px) {
+    .treatment-phase__thumbs {
+        gap: 4px;
+    }
+
+    .treatment-phase__thumb {
+        border-width: 1.5px;
+        border-radius: 7px;
+    }
+
+    .alig-details-list p {
+        font-size: 15px;
+    }
+
+    .alig-details-list ul li {
+        gap: 7px;
+    }
+}
+
+/* A landscape phone is short rather than narrow: the 4:3 stage plus the rail
+   and the dots fill the viewport, so the section padding has to give way. */
+@media (max-height: 480px) and (orientation: landscape) {
+    .phase-trstatement-section {
+        padding-block: 2.5rem;
+        --corner-h: 34px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+
+    .treatment-phase__thumb,
+    .treatment-phase__thumb img,
+    .treatment-phase__dots .owl-dot,
+    .treatment-phase__track .owl-item {
+        transition: none;
+    }
+}

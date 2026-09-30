@@ -1,0 +1,156 @@
+.integrating-3d-section h2{
+  color:rgba(11, 17, 17, 1)
+}
+.integrating-3d-section p{
+  color:rgba(115, 115, 115, 1);
+  font-size:18px;
+  font-weight:300;
+  max-width:80%;
+  margin:auto
+}
+
+
+/* =====================================================
+   INTEGRATED 3D  —  decorative band
+   Layer order (bottom -> top):
+     section::before   background artwork   z-index 0
+     section::after    floating particles   z-index 1
+     .container        photo + orbit ring   z-index 2
+   The background sits on its own pseudo-element so the
+   opacity applies to the artwork ONLY and never fades
+   the team photo sitting above it.
+   ===================================================== */
+
+/* Layout note: this band must stay a normal block. It used to be
+   `display:grid; place-items:center`, which turns the Bootstrap .container
+   into a grid item. `justify-items:center` then sizes that container to
+   fit-content instead of the available width, so the row inside it lost
+   width at intermediate viewports and the band clipped the slider against
+   its own `overflow:hidden`. The button is centred on its own instead. */
+.intergated-bg-section {
+    position: relative;
+    padding-block: clamp(2.25rem, 6.5vw, 5rem);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.intergated-bg-section::before {
+    content: "";
+    position: absolute;
+    /* 6% bleed so the Ken Burns zoom never exposes an edge */
+    inset: -6%;
+    z-index: 0;
+    background-image: url(../images/intergrated-bg.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: .12;
+    pointer-events: none;
+    animation: intergatedBgDrift 24s ease-in-out infinite alternate;
+}
+.align-cleaner-section .tratement-phase-img{
+  right: 0px !important;
+  left:auto !important
+}
+.for-pateint .intergated-bg-section::before{
+    inset: 0% !important;
+    z-index: 0;
+    background-image: url(../images/intergrated-bg.png);
+    background-position: top;
+    background-size: contain;
+}
+.intruction-manual {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  /* The band's own padding-block handles the top gap; this only adds the
+     space between the button and the slider below it. */
+  padding: 0 16px 44px;
+}
+.intruction-manual button{
+  background-color: rgba(201, 165, 89, 1);
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: none;
+    font-size: 18px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* font-weight: 600; */
+    gap: 20px;
+    /* The label is a bare text node, so it can only wrap if the button
+       itself is allowed to be narrower than its content. */
+    max-width: 100%;
+    text-align: center;
+    line-height: 1.3;
+  }
+/* Keep the icon from being squeezed or wrapped by the label above it. */
+.intruction-manual button svg { flex: 0 0 auto; }
+@media only screen and (max-width:767px){
+  .for-pateint .intergated-bg-section::before{
+        background-position: center
+  }
+}
+@media (max-width: 400.98px) {
+    .intruction-manual {
+        padding: 14px 12px 34px;
+    }
+
+    .intruction-manual button {
+        padding: 11px 20px;
+        gap: 12px;
+        font-size: 16px;
+    }
+}
+/* Drifting gold specks */
+
+.intergated-bg-section>.container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+/* Foreground photo + its orbit decoration.
+   The float animation lives on THIS box, not the <img>, so the
+   ring and the glow travel with the photo instead of
+   drifting apart from it. */
+.intergated-section-img {
+    position: relative;
+    isolation: isolate;
+    width: min(820px, 80%);
+    margin-inline: auto;
+    animation: intergatedImgFloat 6.5s ease-in-out infinite;
+}
+
+/* Soft pulsing gold glow behind the photo */
+.intergated-section-img::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -11% -10%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(214, 179, 106, .34) 0%, rgba(214, 179, 106, .12) 52%, transparent 76%);
+    filter: blur(4px);
+    pointer-events: none;
+    animation: intergatedGlow 5s ease-in-out infinite;
+}
+
+/* Rotating orbit arc — a conic sweep masked into a thin ring */
+
+
+/* Foreground photo — never inherits the band opacity */
+.intergated-section-img img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ---- keyframes ---- */
+
+
+

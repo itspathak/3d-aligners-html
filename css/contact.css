@@ -63,3 +63,292 @@
       
 }
 }
+
+/* =====================================================
+   CONTACT PAGE
+   The whole block is dark. The info column is a pure
+   black panel pulled out to the viewport's left edge, so
+   the section reads as one dark mass with a slab running
+   into the left margin.
+
+   --bleed is how far that panel has to travel to reach
+   x=0. Below the container's own breakpoint that is just
+   the gutter; above it, the spare width split either side
+   of the centred container plus the gutter. It follows the
+   same steps as the Bootstrap container, so the panel
+   starts exactly on the screen edge at every width, and
+   its own padding puts the text back on the grid line the
+   rest of the page already uses.
+   ===================================================== */
+
+/* .contact-page {
+  --bs-gutter: var(--bs-gutter-x, 1.5rem);
+  --bleed: calc(var(--bs-gutter) * .5);
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: #0e1310;
+} */
+
+@media (min-width: 576px) {
+  .contact-page { --bleed: max(calc(var(--bs-gutter) * .5), calc((100vw - 540px) / 2 + var(--bs-gutter) * .5)); }
+}
+@media (min-width: 768px) {
+  .contact-page { --bleed: max(calc(var(--bs-gutter) * .5), calc((100vw - 720px) / 2 + var(--bs-gutter) * .5)); }
+}
+@media (min-width: 992px) {
+  .contact-page { --bleed: max(calc(var(--bs-gutter) * .5), calc((100vw - 960px) / 2 + var(--bs-gutter) * .5)); }
+}
+@media (min-width: 1200px) {
+  .contact-page { --bleed: max(calc(var(--bs-gutter) * .5), calc((100vw - 1140px) / 2 + var(--bs-gutter) * .5)); }
+}
+@media (min-width: 1400px) {
+  .contact-page { --bleed: max(calc(var(--bs-gutter) * .5), calc((100vw - 1320px) / 2 + var(--bs-gutter) * .5)); }
+}
+
+/* .contact-block { padding-block: var(--section-space); } */
+
+/* base.css hands .section-title the body colour and .body-copy a mid grey.
+   Both vanish on black, so they are lifted for this block only. */
+/* .contact-page .section-title { color: #fff; }
+.contact-page .body-copy { color: #a7aea8; } */
+
+/* ---- the black slab ---- */
+.contact-information {
+  height: 100%;
+  margin-left: calc(-1 * var(--bleed));
+  width: calc(100% + var(--bleed));
+  padding: clamp(1.75rem, 3.5vw, 3rem) clamp(1.25rem, 2.4vw, 2.25rem) clamp(1.75rem, 3.5vw, 3rem) var(--bleed);
+  background:rgba(11, 17, 17, 0.97);
+    padding: 100px 50px 0px 0px;
+  position: relative;
+}
+/* ---- the full bleed black box ----
+   Drawn as a pseudo element rather than as .contact-information's own
+   background, so it can start at the section's left edge instead of the
+   column's. .contact-information sits inside col-lg-4 and is only a third of
+   the screen wide, so left:0 positioned against it would stop at the column
+   and never reach x=0. It needs .contact-page as the containing block, and
+   that one is full width.
+
+   z-index: 0 on the section is what turns it into a stacking context. That in
+   turn is what lets the box sit at z-index -1 and still be visible: it paints
+   above the section's own (transparent) background but below every part of the
+   row, so the cards and the form stay on top of it instead of being covered. */
+.contact-page {
+  position: relative;
+  z-index: 0;
+}
+
+.contact-information::after, .contact-information::before {
+    content: "";
+    position: absolute;
+    left: -100%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(11, 17, 17, .97);
+    /* z-index: -1; */
+    width: 100%;
+    
+}
+.contact-form{
+  padding-bottom: 30px;
+}
+
+.contact-information::before {
+    display: none;
+      left: 100%;
+}
+.contact-form-info{
+  padding: 100px 40px 80px;
+
+}
+
+.contact-information .section-title { margin-bottom:40px;color:#fff }
+
+/* ---- call / email / location, one per line ---- */
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-info-item {
+display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+    width: 100%;
+    background: #1a1e1b;
+    padding: 10px;
+    border-radius: 10px;
+    border-bottom: 3px solid rgba(204, 168, 93, 1);
+}
+
+.contact-info-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(216 173 79 / .38);
+  border-radius: 50%;
+  color: var(--gold);
+  background: rgb(216 173 79 / .1);
+  font-size: 1.05rem;
+}
+
+.contact-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  min-width: 0;
+}
+
+.contact-info-label {
+  color: rgba(204, 168, 93, 1);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* The phone number and the address both carry long unbroken runs, so
+   overflow-wrap is what stops them pushing the panel past its column. */
+.contact-info-text a,
+.contact-info-value {
+  color: #fff;
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.contact-info-text a { text-decoration: none; }
+.contact-info-text a:hover { color: var(--gold); }
+.contact-info-text a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+/* ---- social ---- */
+.contact-info-social { margin-top: 1.75rem; }
+
+.contact-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: .7rem;
+}
+
+.contact-social-links a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgb(255 255 255 / .22);
+  border-radius: 50%;
+  color: #fff;
+  background: transparent;
+  font-size: 1rem;
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.contact-social-links a:hover,
+.contact-social-links a:focus-visible {
+  border-color: var(--gold);
+  color: #000;
+  background: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* Once the columns stack the panel is the full width of the screen, so the
+   one-sided radius would read as a mistake rather than a bleed. */
+@media (max-width: 991.98px) {
+  .contact-information {
+    border-radius: 0;
+    padding-right: var(--bleed);
+  }
+
+  /* .contact-block { padding-block: calc(var(--section-space) * .8); } */
+}
+/* =====================================================
+   RESPONSIVE
+   Nothing above this line is touched. Desktop keeps the
+   tuned 100px padding, 2.15rem gaps and 44px icons; these
+   overrides only switch on as the viewport narrows, so the
+   desktop layout renders exactly as it did before.
+
+   Each rule sets padding-right explicitly after the padding
+   shorthand, because the 991.98px block above claims
+   padding-right via var(--bleed). If --bleed is ever
+   uncommented into a real value, that rule must not win.
+
+   padding-right is listed on its own line at every stop so
+   the shorthand and the longhand stay in step and neither
+   one silently restores a 100px side gutter.
+   ===================================================== */
+
+/* col-lg-4 is only about 372px wide anywhere below 1400px, so 100px of
+   padding on each side cannot fit inside it - it leaves roughly 90px for the
+   card text. Step the panel down through the two column range; the 100px
+   above is left untouched and still applies from 1400px up, where the column
+   finally has room for it. */
+@media (max-width: 1399.98px) {
+  .contact-information { padding: 64px; padding-right: 64px; }
+  .contact-form-info { padding: 64px 28px 0; }
+}
+
+@media (max-width: 1199.98px) {
+  .contact-information { padding: 48px; padding-right: 48px; }
+  .contact-form-info { padding: 56px 24px 0; }
+}
+
+@media (max-width: 991.98px) {
+  .contact-information { padding: 48px 28px; padding-right: 28px; }
+  .contact-form-info { padding: 48px 20px 0; }
+  .contact-info-list { gap: 1.5rem; }
+  .contact-information .section-title { margin-bottom: 28px; }
+}
+
+@media (max-width: 767.98px) {
+  .contact-information { padding: 36px 20px; padding-right: 20px; }
+  .contact-form-info { padding: 36px 12px 0; }
+  .contact-info-list { gap: 1.15rem; }
+  .contact-info-item { gap: .75rem; }
+  .contact-info-icon { width: 40px; height: 40px; font-size: 1rem; }
+  .contact-info-label { font-size: 13px; }
+  .contact-information .section-title { margin-bottom: 20px; }
+  .contact-information::before{
+    display: block;
+  
+  }
+}
+
+@media (max-width: 575.98px) {
+  .contact-information { padding: 28px 16px; padding-right: 16px; }
+  .contact-form-info { padding: 28px 8px 0; }
+  .contact-info-list { gap: .9rem; }
+  .contact-info-item { padding: 8px; gap: .65rem; }
+  .contact-info-icon { width: 36px; height: 36px; font-size: .95rem; }
+  .contact-info-label { font-size: 12px; }
+  .contact-info-text a,
+  .contact-info-value { font-size: 15px; }
+
+  /* two half width fields are cramped on a phone, and the subject line
+     needs the full width to stay readable */
+  .contact-form .col-md-6 { flex: 0 0 100%; max-width: 100%; }
+
+  /* a full width pill looks wrong; a soft rectangle reads as a field */
+  .contact-form input,
+  .contact-form textarea { border-radius: 12px; }
+
+  /* a full width button is an easier tap target than a small centred one */
+  .contact-form-info .outline-button { width: 100%; }
+}
+
+@media (max-width: 374.98px) {
+  .contact-information { padding: 22px 12px; padding-right: 12px; }
+  .contact-form-info { padding: 22px 4px 0; }
+  .contact-info-icon { width: 32px; height: 32px; }
+}

@@ -1,5 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
   // AOS scroll animations
+  //
+  // AOS's stylesheet holds every [data-aos^=fade] element at opacity: 0 and
+  // only .aos-animate brings it back, so this library decides whether the
+  // content is visible at all. Two things made a section show up late here:
+  //
+  //   1. aos.js was loaded from unpkg.com, so a slow or blocked CDN delayed
+  //      AOS.init() and the section sat blank until it arrived. It is served
+  //      from vendor/ with the rest of the site now.
+  //   2. AOS caches every element's offset when it initialises. This page is
+  //      full of images and web fonts, so the document kept growing after
+  //      that snapshot and the cached trigger points drifted, which could fire
+  //      a section late or leave it hidden. refreshHard() re-measures once
+  //      loading has actually finished.
   if (window.AOS) {
     AOS.init({
       duration: 700,
@@ -8,6 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
       offset: 60,
       disable: window.matchMedia("(prefers-reduced-motion: reduce)").matches
     });
+
+    window.addEventListener("load", () => AOS.refreshHard());
+  } else {
+    // Last resort. Without the library nothing can ever add .aos-animate, so
+    // the stylesheet would keep the section at opacity: 0 permanently.
+    const style = document.createElement("style");
+    style.textContent =
+      "[data-aos]{opacity:1 !important;transform:none !important}";
+    document.head.appendChild(style);
   }
 
   // Owl Carousel project slider
@@ -197,4 +219,105 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  /* ------------------------------------------------------------
+     TREATMENT PHASE SLIDER
+     Slides, thumbnails and the counter total are all written
+     out statically in the HTML. This code only wires up the
+     carousel and keeps the UI in sync while it changes.
+     ------------------------------------------------------------ */
+
+  // The page carries the same phase section more than once, alternating
+  // which side the slider sits on, so every root is wired up on its own.
+  document.querySelectorAll("[data-treatment-phase]").forEach((phaseRoot) => {
+  if (window.jQuery && jQuery.fn.owlCarousel) {
+    const $ = jQuery;
+    const track = phaseRoot.querySelector("[data-phase-track]");
+    const rail = phaseRoot.querySelector("[data-phase-thumbs]");
+    const dotsBox = phaseRoot.querySelector("[data-phase-dots]");
+    const currentOut = phaseRoot.querySelector("[data-phase-current]");
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const pad2 = (n) => String(n).padStart(2, "0");
+    const total = track.querySelectorAll(".item").length;
+    const $track = $(track);
+    let replayTimer = 0;
+
+    // loop:false + rewind:true is deliberate. With loop:true Owl clones the
+    // slides, which makes both to.owl.carousel and e.item.index unreliable,
+    // so thumbnail clicks would not move the stage. rewind:true still gives
+    // endless autoplay: it jumps from the last slide back to the first.
+    $track.owlCarousel({
+      items: 1,
+      loop: false,
+      rewind: true,
+      margin: 0,
+      dots: true,
+      dotsEach: 1,
+      dotsContainer: dotsBox,
+      nav: false,
+      autoplay: !calm,
+      autoplayTimeout: 5200,
+      autoplayHoverPause: true,
+      smartSpeed: 550
+    });
+
+    // Single source of truth for "which slide is showing".
+    function show(index) {
+      if (!(index >= 0) || index >= total) return;
+      currentOut.textContent = pad2(index + 1);
+      rail.querySelectorAll(".treatment-phase__thumb").forEach((btn, i) => {
+        btn.setAttribute("aria-selected", String(i === index));
+      });
+    }
+
+    // Read the active slide back from Owl, with the dots as a fallback.
+    $track.on("changed.owl.carousel", (e) => {
+      const index = e.item && typeof e.item.index === "number" ? e.item.index : -1;
+      if (index >= 0 && index < total) {
+        show(index);
+        return;
+      }
+      const $dots = $(dotsBox).find(".owl-dot");
+      const fromDots = $dots.index($dots.filter(".active"));
+      show(fromDots > -1 ? fromDots : 0);
+    });
+
+    // Pause, jump, then give the picked image a full interval before the
+    // autoplay timer picks up again.
+    function goTo(index) {
+      show(index);
+      $track.trigger("to.owl.carousel", [index, 550]);
+      if (calm) return;
+
+      $track.trigger("stop.owl.autoplay");
+      window.clearTimeout(replayTimer);
+      replayTimer = window.setTimeout(() => $track.trigger("play.owl.autoplay"), 550);
+    }
+
+    // Clicking a thumbnail shows that image in the stage.
+    rail.addEventListener("click", (e) => {
+      const btn = e.target.closest(".treatment-phase__thumb");
+      if (!btn) return;
+      goTo(Number(btn.dataset.index));
+    });
+
+    // Left / right arrows move between thumbnails once one has focus.
+    rail.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const buttons = Array.from(rail.querySelectorAll(".treatment-phase__thumb"));
+      const at = buttons.indexOf(document.activeElement);
+      if (at === -1) return;
+
+      e.preventDefault();
+      const step = e.key === "ArrowRight" ? 1 : -1;
+      const next = buttons[(at + step + buttons.length) % buttons.length];
+      next.focus();
+      goTo(Number(next.dataset.index));
+    });
+
+    // Hold autoplay while the user is browsing the rail.
+    rail.addEventListener("mouseenter", () => $track.trigger("stop.owl.autoplay"));
+    rail.addEventListener("mouseleave", () => $track.trigger("play.owl.autoplay"));
+  }
+  });
 });
